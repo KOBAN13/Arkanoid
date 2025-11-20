@@ -1,7 +1,8 @@
 ﻿namespace Field.Matrix
 {
-    public class EFieldCellType
+    public enum EFieldCellType
     {
-        
+        Empty,
+        Block,
     }
 }
