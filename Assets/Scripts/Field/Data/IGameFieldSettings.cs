@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Model;
+using UnityEngine;
 
 namespace Field.Data
 {
@@ -7,5 +8,6 @@ namespace Field.Data
         int Width { get; }
         int Height { get; }
         Vector2Int BlockSize { get; }
+        BlockView BlockPrefab { get; }
     }
 }

@@ -20,13 +20,12 @@ namespace Di
 
         private void BindData()
         {
-            Container.BindInterfacesAndSelfTo<GameFieldSettings>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();
         }
 
         private void BindField()
         {
             Container.BindInterfacesAndSelfTo<MatrixService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<GameFieldSettings>().AsSingle().NonLazy();
         }
 
         private void BindPool()

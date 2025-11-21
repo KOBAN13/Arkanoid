@@ -25,7 +25,7 @@ namespace Field.Matrix
             set => _array[pos.x + pos.y * Size.x] = value;
         }
         
-        private Matrix(T[] array, Vector2Int size)
+        public Matrix(T[] array, Vector2Int size)
         {
             var length = size.x * size.y;
 

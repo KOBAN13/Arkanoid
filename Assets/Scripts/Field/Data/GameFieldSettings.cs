@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Model;
+using UnityEngine;
 
 namespace Field.Data
 {
@@ -8,5 +9,6 @@ namespace Field.Data
         [field: SerializeField] public int Width { get; private set; }
         [field: SerializeField] public int Height { get; private set; }
         [field: SerializeField] public Vector2Int BlockSize { get; private set; }
+        [field: SerializeField] public BlockView BlockPrefab { get; private set; }
     }
 }
