@@ -951,8 +951,32 @@ PrefabInstance:
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_Constraints
       value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_ImplicitCom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8996386050387069133, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: _rigidbody

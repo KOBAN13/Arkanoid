@@ -13,8 +13,9 @@ namespace Model
         public Vector3 Position => transform.position;
         public Vector3 Velocity => _rigidbody.linearVelocity;
         public Transform StartPoint => _startPoint;
+        public Rigidbody Rigidbody => _rigidbody;
         public Observable<Collision> OnBallCollision => _onBallCollision;
-
+        
         private readonly Subject<Collision> _onBallCollision = new();
         
         private void Awake()

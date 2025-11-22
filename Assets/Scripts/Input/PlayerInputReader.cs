@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Input
 {
-    public class PlayerInputReader : PlayerInput.IMoveActions, IInputReader, IDisposable, IInitializable
+    public class PlayerInputReader : IInputReader, IDisposable, IInitializable, ITickable
     {
         private readonly ReactiveProperty<Vector2> _move = new();
         public Observable<Vector2> Move => _move;
@@ -16,12 +16,6 @@ namespace Input
         public PlayerInputReader(PlayerInput playerInput)
         {
             _playerInput = playerInput;
-        }
-        
-        public void OnMovePlatform(InputAction.CallbackContext context)
-        {
-            var direction = context.ReadValue<Vector2>();
-            _move.Value = direction;
         }
 
         public void Dispose()
@@ -37,6 +31,13 @@ namespace Input
         private void EnablePlayerAction()
         {
             _playerInput.Enable();
+        }
+
+        public void Tick()
+        {
+            var direction = _playerInput.Move.MovePlatform.ReadValue<Vector2>();
+            
+            _move.Value = direction;
         }
     }
 }

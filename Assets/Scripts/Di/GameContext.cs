@@ -4,6 +4,7 @@ using Field.Matrix;
 using Input;
 using Model;
 using Pool;
+using Stats;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +14,8 @@ namespace Di
     {
         [SerializeField] private GameFieldSettings _gameFieldService;
         [SerializeField] private BallSettings _ballSettings;
+        [SerializeField] private BlockAnimationSettings _blockAnimationSettings;
+        [SerializeField] private BlockHealthSettings _blockHealthSettings;
         
         [SerializeField] private BallView _ballView;
         [SerializeField] private PlatformView _platformView;
@@ -25,6 +28,12 @@ namespace Di
             BindInput();
             BindBall();
             BindPlatform();
+            BindHealth();
+        }
+
+        private void BindHealth()
+        {
+            Container.BindInterfacesAndSelfTo<BlockHealth>().AsTransient().WithArguments(_blockHealthSettings).NonLazy();
         }
 
         private void BindPlatform()
@@ -48,7 +57,8 @@ namespace Di
         private void BindData()
         {
             Container.BindInterfacesAndSelfTo<BallSettings>().FromScriptableObject(_ballSettings).AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();    
+            Container.BindInterfacesAndSelfTo<BlockAnimationSettings>().FromScriptableObject(_blockAnimationSettings).AsSingle().NonLazy();
         }
 
         private void BindField()
