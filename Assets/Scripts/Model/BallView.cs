@@ -1,13 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Ball
+namespace Model
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class BallView : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
 
         public Vector3 Position => transform.position;
-        public Vector3 Velocity => _rigidbody != null ? _rigidbody.velocity : Vector3.zero;
+        public Vector3 Velocity => _rigidbody.angularVelocity;
 
         private void Awake()
         {
@@ -27,12 +28,7 @@ namespace Ball
 
         public void SetVelocity(Vector3 velocity)
         {
-            if (_rigidbody == null)
-            {
-                return;
-            }
-
-            _rigidbody.velocity = velocity;
+            _rigidbody.angularVelocity = velocity;
         }
 
         public void Stop()

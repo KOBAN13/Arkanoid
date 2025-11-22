@@ -1,5 +1,6 @@
 ﻿using Field.Data;
 using Field.Matrix;
+using Input;
 using Model;
 using Pool;
 using UnityEngine;
@@ -16,6 +17,13 @@ namespace Di
             BindField();
             BindData();
             BindPool();
+            BindInput();
+        }
+
+        private void BindInput()
+        {
+            Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerInputReader>().AsSingle().NonLazy();
         }
 
         private void BindData()

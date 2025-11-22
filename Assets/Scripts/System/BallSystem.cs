@@ -1,33 +1,27 @@
+﻿using Model;
 using UnityEngine;
+using Zenject;
 
-namespace Ball
+namespace System
 {
-    [RequireComponent(typeof(BallView))]
-    public class BallController : MonoBehaviour
+    public class BallSystem : IInitializable, IFixedTickable
     {
         [SerializeField] private BallView _ballView;
         [SerializeField] private Transform _startPoint;
         [SerializeField] private float _startSpeed = 8f;
         [SerializeField] private Vector3 _startDirection = new Vector3(0.6f, 1f, 0f);
         [SerializeField] private float _minimumVerticalDot = 0.2f;
-
-        private void Awake()
-        {
-            if (_ballView == null)
-            {
-                _ballView = GetComponent<BallView>();
-            }
-        }
-
-        private void Start()
+        
+        public void Initialize()
         {
             ResetBall();
             Launch();
         }
-
-        private void FixedUpdate()
+        
+        public void FixedTick()
         {
             var velocity = _ballView.Velocity;
+            
             if (velocity.sqrMagnitude <= Mathf.Epsilon)
             {
                 return;
@@ -35,6 +29,7 @@ namespace Ball
 
             _ballView.SetVelocity(velocity.normalized * _startSpeed);
         }
+        
 
         private void OnCollisionEnter(Collision collision)
         {
