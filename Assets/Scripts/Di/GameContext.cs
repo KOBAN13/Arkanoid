@@ -1,4 +1,5 @@
-﻿using Field.Data;
+﻿using System;
+using Field.Data;
 using Field.Matrix;
 using Input;
 using Model;
@@ -11,6 +12,10 @@ namespace Di
     public class GameContext : MonoInstaller
     {
         [SerializeField] private GameFieldSettings _gameFieldService;
+        [SerializeField] private BallSettings _ballSettings;
+        
+        [SerializeField] private BallView _ballView;
+        [SerializeField] private PlatformView _platformView;
         
         public override void InstallBindings()
         {
@@ -18,6 +23,20 @@ namespace Di
             BindData();
             BindPool();
             BindInput();
+            BindBall();
+            BindPlatform();
+        }
+
+        private void BindPlatform()
+        {
+            Container.BindInterfacesAndSelfTo<PlatformView>().FromInstance(_platformView).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlatformSystem>().AsSingle().NonLazy();
+        }
+
+        private void BindBall()
+        {
+            Container.BindInterfacesAndSelfTo<BallView>().FromInstance(_ballView).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BallSystem>().AsSingle().NonLazy();
         }
 
         private void BindInput()
@@ -28,6 +47,7 @@ namespace Di
 
         private void BindData()
         {
+            Container.BindInterfacesAndSelfTo<BallSettings>().FromScriptableObject(_ballSettings).AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();
         }
 

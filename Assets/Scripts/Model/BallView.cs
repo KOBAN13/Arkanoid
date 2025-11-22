@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using R3;
+using UnityEngine;
 
 namespace Model
 {
@@ -6,19 +8,18 @@ namespace Model
     public class BallView : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Transform _startPoint;
 
         public Vector3 Position => transform.position;
-        public Vector3 Velocity => _rigidbody.angularVelocity;
+        public Vector3 Velocity => _rigidbody.linearVelocity;
+        public Transform StartPoint => _startPoint;
+        public Observable<Collision> OnBallCollision => _onBallCollision;
 
+        private readonly Subject<Collision> _onBallCollision = new();
+        
         private void Awake()
         {
-            EnsureRigidbody();
-            DisableGravity();
-        }
-
-        private void OnValidate()
-        {
-            EnsureRigidbody();
+            _rigidbody.useGravity = false;
         }
 
         public void SetPosition(Vector3 position)
@@ -28,7 +29,7 @@ namespace Model
 
         public void SetVelocity(Vector3 velocity)
         {
-            _rigidbody.angularVelocity = velocity;
+            _rigidbody.linearVelocity = velocity;
         }
 
         public void Stop()
@@ -36,37 +37,9 @@ namespace Model
             SetVelocity(Vector3.zero);
         }
 
-        public void AddImpulse(Vector3 impulse)
+        private void OnCollisionEnter(Collision collision)
         {
-            if (_rigidbody == null)
-            {
-                return;
-            }
-
-            _rigidbody.AddForce(impulse, ForceMode.VelocityChange);
-        }
-
-        public Vector3 Reflect(Vector3 inDirection, Vector3 normal, float speed)
-        {
-            var reflectedDirection = Vector3.Reflect(inDirection.normalized, normal);
-            SetVelocity(reflectedDirection * speed);
-            return reflectedDirection;
-        }
-
-        private void EnsureRigidbody()
-        {
-            if (_rigidbody == null)
-            {
-                TryGetComponent(out _rigidbody);
-            }
-        }
-
-        private void DisableGravity()
-        {
-            if (_rigidbody != null)
-            {
-                _rigidbody.useGravity = false;
-            }
+            _onBallCollision?.OnNext(collision);
         }
     }
 }
