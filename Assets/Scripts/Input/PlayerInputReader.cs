@@ -1,4 +1,5 @@
 using System;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,19 +7,8 @@ namespace Input
 {
     public class PlayerInputReader : DefaultInputActions.IPlayerActions, IInputReader, IDisposable
     {
-        public event Action<Vector3> Move = delegate { };
-        public event Action<bool> Jump = delegate { };
-        public event Action TakeItem = delegate { };
-        public event Action OpenInventory = delegate { };
-        
-        public Vector3 Direction
-        {
-            get
-            {
-                var direction = _playerInput.Player.Move.ReadValue<Vector2>();
-                return new Vector3(direction.x, 0f, direction.y);
-            }
-        }
+        private readonly ReactiveProperty<Vector2> _move = new();
+        public Observable<Vector2> Move => _move;
         
         private readonly PlayerInput _playerInput;
 
@@ -34,17 +24,18 @@ namespace Input
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            Move?.Invoke(Direction);
+            var direction = context.ReadValue<Vector2>();
+            _move.Value = new Vector3(direction.x, direction.y, 0f);
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnFire(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Dispose()
