@@ -1,10 +1,11 @@
-﻿using Field.Matrix;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Field
+namespace Field.Matrix
 {
     public interface IMatrixService
     {
+        Matrix<EFieldCellType> Field { get; }
+        
         void CreateBlock(Vector2Int position);
         void DeleteBlock(Vector2Int position);
         EFieldCellType GetCellType(Vector2Int position);

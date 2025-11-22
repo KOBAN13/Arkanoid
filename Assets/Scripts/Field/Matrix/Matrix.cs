@@ -10,7 +10,6 @@ namespace Field.Matrix
         public Vector2Int Size { get; }
         public int Length { get; }
         public int Width => Size.x;
-        
         public int Height => Size.y;
 
         public T this[int x, int y]

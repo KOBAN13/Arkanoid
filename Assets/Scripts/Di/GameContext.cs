@@ -13,8 +13,8 @@ namespace Di
         
         public override void InstallBindings()
         {
-            BindData();
             BindField();
+            BindData();
             BindPool();
         }
 

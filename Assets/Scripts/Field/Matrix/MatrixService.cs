@@ -1,5 +1,4 @@
 ﻿using Field.Data;
-using System.Buffers;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +7,9 @@ namespace Field.Matrix
     public class MatrixService : IMatrixService, IInitializable
     {
         private Matrix<EFieldCellType> _field;
+        public Matrix<EFieldCellType> Field => _field;
         
-        private IGameFieldSettings _gameFieldSettings;
+        private readonly IGameFieldSettings _gameFieldSettings;
 
         public MatrixService(IGameFieldSettings gameFieldSettings)
         {

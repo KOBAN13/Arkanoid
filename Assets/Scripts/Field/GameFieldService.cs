@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Field.Data;
+using Field.Matrix;
 using Model;
 using Pool;
 using UnityEngine;
@@ -28,13 +29,16 @@ namespace Field
             _blockPool = blockPool;
         }
 
-        private void Awake()
+        private void Start()
         {
             _blockPool.Initialize(_gameFieldSettings.BlockPrefab);
 
-            for (var x = 0; x < _gameFieldSettings.Height; x++)
+            var height = _matrixService.Field.Height;
+            var width = _matrixService.Field.Width;
+
+            for (var x = 0; x < width; x++)
             {
-                for (var y = 0; y < _gameFieldSettings.Width; y++)
+                for (var y = 0; y < height; y++)
                 {
                     CreateBlock(new Vector2Int(x, y));
                 }
@@ -47,10 +51,21 @@ namespace Field
 
             var blockView = _blockPool.GetObject();
             blockView.transform.SetParent(_blocksParent, false);
-            blockView.transform.localPosition = new Vector3(position.x * 2f, position.y, 0f);
+
+            var blockSize = _gameFieldSettings.BlockSize;
+            var blockOffset = _gameFieldSettings.BlockOffset;
+
+            var stepX = blockSize.x + blockOffset.x;
+            var stepY = blockSize.y + blockOffset.y;
+    
+            var blockPositionX = position.x * stepX;
+            var blockPositionY = position.y * stepY;
+
+            blockView.transform.localPosition = new Vector3(blockPositionX, blockPositionY, 0f);
 
             _blocks[position] = blockView;
         }
+
 
         public void DeleteBlock(Vector2Int position)
         {

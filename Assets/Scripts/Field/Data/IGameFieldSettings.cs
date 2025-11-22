@@ -8,6 +8,7 @@ namespace Field.Data
         int Width { get; }
         int Height { get; }
         Vector2Int BlockSize { get; }
+        Vector2Int BlockOffset { get; }
         BlockView BlockPrefab { get; }
     }
 }
