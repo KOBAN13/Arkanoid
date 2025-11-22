@@ -32,9 +32,9 @@ namespace Field
         {
             _blockPool.Initialize(_gameFieldSettings.BlockPrefab);
 
-            for (var x = 0; x < _gameFieldSettings.Height; x++)
+            for (var x = 0; x < _gameFieldSettings.Width; x++)
             {
-                for (var y = 0; y < _gameFieldSettings.Width; y++)
+                for (var y = 0; y < _gameFieldSettings.Height; y++)
                 {
                     CreateBlock(new Vector2Int(x, y));
                 }
