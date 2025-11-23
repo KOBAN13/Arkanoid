@@ -7,14 +7,13 @@ namespace Stats
 {
     public class BlockHealth : IHealthStats
     {
-        public float MaxValue { get; private set; }
-        public float CurrentHealth => _currentHealth.Value;
+        public int MaxValue { get; private set; }
+        public int CurrentHealth => _currentHealth.Value;
         public Observable<Unit> OnHealthZero => _onHealthZero;
 
         private readonly IBlockHealthSettings _config;
 
-        private readonly ReactiveProperty<float> _currentHealth = new();
-        private readonly ReactiveProperty<float> _amountHealthPercentage = new();
+        private readonly ReactiveProperty<int> _currentHealth = new();
         private readonly Subject<Unit> _onHealthZero = new();
         
         public BlockHealth(IBlockHealthSettings config)
@@ -22,38 +21,32 @@ namespace Stats
             _config = config;
             
             MaxValue = _currentHealth.Value = _config.MaxValue;
-            _amountHealthPercentage.Value = 1f;
         }
 
         public void ResetHealthStat()
         {
             MaxValue = _currentHealth.Value = _config.MaxValue;
-            _amountHealthPercentage.Value = 1f;
         }
 
-        public void SetDamage(float value)
+        public void SetDamage(int value)
         {
             if (value < 0)
                 throw new ArgumentException("Value must be greater than 0");
             
-            _currentHealth.Value = Mathf.Clamp(_currentHealth.Value - value, 0f, MaxValue);
+            _currentHealth.Value = Mathf.Clamp(_currentHealth.Value - value, 0, MaxValue);
 
-            _amountHealthPercentage.Value = Mathf.Clamp(_amountHealthPercentage.Value - value / MaxValue, 0f, 1f);
-
-            if (_currentHealth.Value != 0f)
+            if (_currentHealth.Value != 0)
                 return;
             
             _onHealthZero.OnNext(Unit.Default);
         }
 
-        public void AddHealth(float value)
+        public void AddHealth(int value)
         {
             if (value < 0)
                 throw new ArgumentException("Value must be greater than 0");
             
-            _currentHealth.Value = Mathf.Clamp(value + _currentHealth.Value, 0f, MaxValue);
-
-            _amountHealthPercentage.Value = Mathf.Clamp(_currentHealth.Value / MaxValue, 0f, 1f);
+            _currentHealth.Value = Mathf.Clamp(value + _currentHealth.Value, 0, MaxValue);
         }
     }
 }

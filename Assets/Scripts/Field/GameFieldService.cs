@@ -4,6 +4,7 @@ using Field.Data;
 using Field.Matrix;
 using Model;
 using Pool;
+using R3;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace Field
         private IMatrixService _matrixService;
         private IGameFieldSettings _gameFieldSettings;
         private IGenericObjectPool<BlockView> _blockPool;
+        private CompositeDisposable _disposables = new();
         private readonly Dictionary<Vector2Int, BlockView> _blocks = new();
 
         [Inject]
@@ -50,6 +52,9 @@ namespace Field
             _matrixService.CreateBlock(position);
 
             var blockView = _blockPool.GetObject();
+            
+            blockView.OnDisappear.Subscribe(_ => DeleteBlock(position)).AddTo(_disposables);
+            
             blockView.transform.SetParent(_blocksParent, false);
 
             var blockSize = _gameFieldSettings.BlockSize;
@@ -65,8 +70,7 @@ namespace Field
 
             _blocks[position] = blockView;
         }
-
-
+        
         public void DeleteBlock(Vector2Int position)
         {
             _matrixService.DeleteBlock(position);

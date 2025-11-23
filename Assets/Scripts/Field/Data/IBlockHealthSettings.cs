@@ -2,6 +2,6 @@
 {
     public interface IBlockHealthSettings
     {
-        float MaxValue { get; }
+        int MaxValue { get; }
     }
 }

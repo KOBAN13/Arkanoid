@@ -1079,6 +1079,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameFieldService: {fileID: 11400000, guid: 2468260d1944f1f4db701bf3fedef9ad, type: 2}
   _ballSettings: {fileID: 11400000, guid: 69b7d8a550fad8c4c836714c8917fdc0, type: 2}
+  _blockAnimationSettings: {fileID: 11400000, guid: 34c3cf42784e04f4e8d62d8e59e42819, type: 2}
+  _blockHealthSettings: {fileID: 0}
   _ballView: {fileID: 2037897861}
   _platformView: {fileID: 5328492033936198348}
 --- !u!114 &2120912771
