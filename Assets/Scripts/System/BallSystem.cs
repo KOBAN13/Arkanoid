@@ -47,7 +47,7 @@ namespace System
             ContactPoint contact = collision.GetContact(0);
             Vector3 normal = contact.normal;
             
-            const float safePush = 0.02f;
+            float safePush = _ballSettings.Skin;
             _ballView.SetPosition(contact.point + normal * safePush);
             
             Vector3 vel = _ballView.Velocity;

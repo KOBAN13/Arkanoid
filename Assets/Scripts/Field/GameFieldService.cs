@@ -52,8 +52,13 @@ namespace Field
             _matrixService.CreateBlock(position);
 
             var blockView = _blockPool.GetObject();
-            
-            blockView.OnDisappear.Subscribe(_ => DeleteBlock(position)).AddTo(_disposables);
+
+            blockView.Initialize();
+
+            blockView.OnDisappear
+                .Take(1)
+                .Subscribe(_ => DeleteBlock(position))
+                .AddTo(_disposables);
             
             blockView.transform.SetParent(_blocksParent, false);
 

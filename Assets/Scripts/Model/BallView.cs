@@ -11,7 +11,7 @@ namespace Model
         [SerializeField] private Transform _startPoint;
 
         public Vector3 Position => transform.position;
-        public Vector3 Velocity => _rigidbody.linearVelocity;
+        public Vector3 Velocity => _rigidbody.velocity;
         public Transform StartPoint => _startPoint;
         public Rigidbody Rigidbody => _rigidbody;
         public Observable<Collision> OnBallCollision => _onBallCollision;
@@ -21,6 +21,8 @@ namespace Model
         private void Awake()
         {
             _rigidbody.useGravity = false;
+            _rigidbody.freezeRotation = true;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
 
         public void SetPosition(Vector3 position)
@@ -30,7 +32,7 @@ namespace Model
 
         public void SetVelocity(Vector3 velocity)
         {
-            _rigidbody.linearVelocity = velocity;
+            _rigidbody.velocity = velocity;
         }
 
         public void Stop()

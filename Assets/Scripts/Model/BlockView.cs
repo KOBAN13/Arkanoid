@@ -11,7 +11,8 @@ namespace Model
     {
         [SerializeField] private Renderer _renderer;
         private readonly Subject<BlockView> _onDisappear = new();
-        
+
+        private readonly CompositeDisposable _subscriptions = new();
         private Sequence _blockSequence;
         private Sequence _blockBreakSequence;
         private IBlockAnimationSettings _blockAnimationSettings;
@@ -28,19 +29,27 @@ namespace Model
         
         public void Initialize()
         {
-            _healthStats.OnHealthZero.Subscribe(BlockAnimationBreak).AddTo(this);
+            _subscriptions.Clear();
+
+            _blockBreakSequence?.Kill();
+            _blockSequence?.Kill();
+
+            _healthStats.ResetHealthStat();
+            ResetViewState();
+
+            _healthStats.OnHealthZero.Subscribe(BlockAnimationBreak).AddTo(_subscriptions);
         }
         
         public void OnCollisionEnter(Collision other)
         {
             BlockAnimationHit();
-            
+
             _healthStats.SetDamage(1);
         }
 
         private void BlockAnimationHit()
         {
-            _blockSequence.Kill();
+            _blockSequence?.Kill();
             _blockSequence = DOTween.Sequence();
             
             _blockSequence
@@ -66,12 +75,27 @@ namespace Model
             
             var duration = 0.15f;
             
-            _blockBreakSequence.Kill();
+            _blockBreakSequence?.Kill();
             _blockBreakSequence = DOTween.Sequence();
 
             _blockBreakSequence.Append(transform.DOScale(Vector3.zero, duration).SetEase(Ease.InBack));
             _blockBreakSequence.Join(_renderer.material.DOFade(0f, duration));
             _blockBreakSequence.OnComplete(() => _onDisappear.OnNext(this));
+        }
+
+        private void OnDisable()
+        {
+            _blockSequence?.Kill();
+            _blockBreakSequence?.Kill();
+            _subscriptions.Clear();
+            ResetViewState();
+        }
+
+        private void ResetViewState()
+        {
+            transform.localScale = Vector3.one;
+            var material = _renderer.material;
+            material.color = _blockAnimationSettings.OriginalColor;
         }
     }
 }
