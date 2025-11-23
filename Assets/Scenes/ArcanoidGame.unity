@@ -604,7 +604,7 @@ Transform:
   m_GameObject: {fileID: 354472428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1252,7 +1252,6 @@ GameObject:
   m_Component:
   - component: {fileID: 844437734}
   - component: {fileID: 844437736}
-  - component: {fileID: 844437735}
   m_Layer: 0
   m_Name: DrawWithMouse
   m_TagString: Untagged
@@ -1275,21 +1274,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &844437735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844437733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de0d1c957cee45b49a8321440e8b4d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 330585545}
-  _point: {fileID: 354472429}
-  _line: {fileID: 844437736}
 --- !u!120 &844437736
 LineRenderer:
   serializedVersion: 2
@@ -1335,7 +1319,9 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions: []
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -1750,7 +1736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_AngularDrag
@@ -1781,6 +1767,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585545}
     - target: {fileID: 8996386050387069133, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
+      propertyPath: _line
+      value: 
+      objectReference: {fileID: 844437736}
+    - target: {fileID: 8996386050387069133, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: _camera
       value: 
       objectReference: {fileID: 330585545}
@@ -1802,7 +1792,7 @@ PrefabInstance:
       objectReference: {fileID: 354472429}
     - target: {fileID: 9193073823343053479, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9193073823343053479, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1810,7 +1800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9193073823343053479, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9193073823343053479, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1854,17 +1844,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 5193245233145890825, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
   m_PrefabInstance: {fileID: 2037897859}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2037897861 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8996386050387069133, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
-  m_PrefabInstance: {fileID: 2037897859}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47226d397bfd40469a63e33ed2201c84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2037897862 stripped
 SphereCollider:
   m_CorrespondingSourceObject: {fileID: 2784395225369258628, guid: d3932b343580d1d4f9ea5ee11756e40e, type: 3}
@@ -1985,7 +1964,7 @@ MonoBehaviour:
   _ballSettings: {fileID: 11400000, guid: 69b7d8a550fad8c4c836714c8917fdc0, type: 2}
   _blockAnimationSettings: {fileID: 11400000, guid: 34c3cf42784e04f4e8d62d8e59e42819, type: 2}
   _blockHealthSettings: {fileID: 11400000, guid: ebb2de7cad9f0084baeb1ec767a791a6, type: 2}
-  _ballView: {fileID: 2037897861}
+  _ballView: {fileID: 0}
   _platformView: {fileID: 5328492033936198348}
 --- !u!114 &2120912771
 MonoBehaviour:

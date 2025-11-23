@@ -28,6 +28,8 @@ namespace Systems
 
         public void Initialize()
         {
+            _startPoint = _ballView.StartPoint;
+            
             ResetBall();
 
             _inputReader.OnMouseLeftClick
@@ -51,7 +53,7 @@ namespace Systems
             
             var line = _ballView.Line;
             
-            line.SetPosition(0, _ballView.StartPoint.position);
+            line.SetPosition(0, _ballView.BallTransform.position);
             
             var mousePosition = _ballView.Camera.ScreenToWorldPoint(new Vector3(
                 UnityEngine.Input.mousePosition.x,
@@ -105,23 +107,25 @@ namespace Systems
 
         private void ResetBall()
         {
-            _ballView.transform.SetParent(_startPoint);
-            _ballView.transform.localPosition = Vector3.zero;
+            _ballView.transform.localPosition = _startPoint.localPosition;
             _isLaunched = false;
 
             _lastVelocity = Vector3.zero;
             _perpendicularReflectionCount = 0;
+            _ballView.Line.enabled = true;
         }
 
         private void LaunchToPoint(Vector2 screenPoint)
         {
-            if (_isLaunched) return;
+            if (_isLaunched) 
+                return;
+            
             _isLaunched = true;
-
-            _ballView.transform.SetParent(null);
-            _ballView.transform.localPosition = Vector3.zero;
-
+            
+            _ballView.Line.enabled = false;
+            
             var depth = _ballView.Camera.WorldToScreenPoint(_startPoint.position).z;
+            
             var target = _ballView.Camera.ScreenToWorldPoint(
                 new Vector3(screenPoint.x, screenPoint.y, depth)
             );

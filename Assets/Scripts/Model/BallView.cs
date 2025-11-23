@@ -15,6 +15,7 @@ namespace Model
         public LineRenderer Line => _line;
         public Vector3 Velocity => _rigidbody.linearVelocity;
         public Transform StartPoint => _startPoint;
+        public Transform BallTransform => transform;
         public Observable<Collision> OnBallCollision => _onBallCollision;
         
         private readonly Subject<Collision> _onBallCollision = new();

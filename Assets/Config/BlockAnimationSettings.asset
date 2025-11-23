@@ -19,3 +19,4 @@ MonoBehaviour:
   <PunchDuration>k__BackingField: 0.2
   <PunchAmplitude>k__BackingField: 0.3
   <ColorDuration>k__BackingField: 0.1
+  <BreakDuration>k__BackingField: 0.15
