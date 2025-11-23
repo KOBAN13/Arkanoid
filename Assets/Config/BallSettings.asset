@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182c43d29a9f4552967056137333a514, type: 3}
   m_Name: BallSettings
   m_EditorClassIdentifier: 
-  <StartSpeed>k__BackingField: 8
-  <MinimumVerticalDot>k__BackingField: 0
+  <StartSpeed>k__BackingField: 15
+  <MinimumVerticalDot>k__BackingField: 0.15
   <StartDirection>k__BackingField: {x: 0.2, y: 3, z: 0}
-  <MaximumVerticalDot>k__BackingField: 0
-  <MinimumHorizontalDot>k__BackingField: 0
-  <Skin>k__BackingField: 0
+  <MaximumVerticalDot>k__BackingField: 0.8
+  <MinimumHorizontalDot>k__BackingField: 0.15
+  <Skin>k__BackingField: 0.025
+  <DeviationAngle>k__BackingField: 10
+  <PerpendicularThreshold>k__BackingField: 0.1

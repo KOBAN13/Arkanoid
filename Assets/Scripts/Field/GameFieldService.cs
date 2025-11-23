@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Field.Data;
 using Field.Matrix;
 using Model;
@@ -16,7 +15,7 @@ namespace Field
         private IMatrixService _matrixService;
         private IGameFieldSettings _gameFieldSettings;
         private IGenericObjectPool<BlockView> _blockPool;
-        private CompositeDisposable _disposables = new();
+        private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<Vector2Int, BlockView> _blocks = new();
 
         [Inject]

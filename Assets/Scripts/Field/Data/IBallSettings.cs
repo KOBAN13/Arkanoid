@@ -10,5 +10,7 @@ namespace Field.Data
         float MaximumVerticalDot { get; }
         float MinimumHorizontalDot { get; }
         float Skin { get; }
+        int DeviationAngle { get; }
+        float PerpendicularThreshold { get; }
     }
 }

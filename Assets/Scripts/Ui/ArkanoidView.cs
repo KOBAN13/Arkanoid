@@ -20,7 +20,10 @@ namespace Ui
 
         private void InitializeUi()
         {
-            _restartButton.onClick.AsObservable().Subscribe(_ => OnRestartButtonClick()).AddTo(this);
+            _restartButton.onClick
+                .AsObservable()
+                .Subscribe(_ => OnRestartButtonClick())
+                .AddTo(this);
         }
         
         private void OnRestartButtonClick()

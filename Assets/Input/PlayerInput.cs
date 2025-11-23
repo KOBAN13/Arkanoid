@@ -100,6 +100,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""d3dd49fd-3f4a-4680-9e9c-87dd6814d7ef"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseLeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""99b1e337-1bb6-47da-ab03-67ba9f1b1ed5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,6 +153,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MovePlatform"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b6c4bfe-5d43-48d3-8b2a-03f822dc0cb6"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4ee458a-7e6e-448d-b89d-6676cdc5063e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +184,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Move
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
         m_Move_MovePlatform = m_Move.FindAction("MovePlatform", throwIfNotFound: true);
+        m_Move_MousePosition = m_Move.FindAction("MousePosition", throwIfNotFound: true);
+        m_Move_MouseLeftClick = m_Move.FindAction("MouseLeftClick", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -225,6 +267,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Move;
     private List<IMoveActions> m_MoveActionsCallbackInterfaces = new List<IMoveActions>();
     private readonly InputAction m_Move_MovePlatform;
+    private readonly InputAction m_Move_MousePosition;
+    private readonly InputAction m_Move_MouseLeftClick;
     /// <summary>
     /// Provides access to input actions defined in input action map "Move".
     /// </summary>
@@ -240,6 +284,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Move/MovePlatform".
         /// </summary>
         public InputAction @MovePlatform => m_Wrapper.m_Move_MovePlatform;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_Move_MousePosition;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/MouseLeftClick".
+        /// </summary>
+        public InputAction @MouseLeftClick => m_Wrapper.m_Move_MouseLeftClick;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -269,6 +321,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MovePlatform.started += instance.OnMovePlatform;
             @MovePlatform.performed += instance.OnMovePlatform;
             @MovePlatform.canceled += instance.OnMovePlatform;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+            @MouseLeftClick.started += instance.OnMouseLeftClick;
+            @MouseLeftClick.performed += instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled += instance.OnMouseLeftClick;
         }
 
         /// <summary>
@@ -283,6 +341,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MovePlatform.started -= instance.OnMovePlatform;
             @MovePlatform.performed -= instance.OnMovePlatform;
             @MovePlatform.canceled -= instance.OnMovePlatform;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+            @MouseLeftClick.started -= instance.OnMouseLeftClick;
+            @MouseLeftClick.performed -= instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled -= instance.OnMouseLeftClick;
         }
 
         /// <summary>
@@ -330,5 +394,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovePlatform(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseLeftClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseLeftClick(InputAction.CallbackContext context);
     }
 }

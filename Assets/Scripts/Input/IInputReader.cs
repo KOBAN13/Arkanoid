@@ -5,6 +5,7 @@ namespace Input
 {
     public interface IInputReader
     {
+        Observable<Vector2> OnMouseLeftClick { get; }
         Observable<Vector2> Move { get; }
     }
 }

@@ -68,19 +68,17 @@ namespace Model
 
         private void BlockAnimationBreak(Unit unit)
         {
-            var duration = 0.15f;
-            
             transform.DOKill();
             _blockBreakSequence.Kill();
             _blockBreakSequence = DOTween.Sequence();
 
             _blockBreakSequence
                 .Append(transform
-                .DOScale(Vector3.zero, duration)
+                .DOScale(Vector3.zero, _blockAnimationSettings.BreakDuration)
                 .SetEase(Ease.InBack));
             
             _blockBreakSequence
-                .Join(_renderer.material.DOFade(0f, duration));
+                .Join(_renderer.material.DOFade(0f, _blockAnimationSettings.BreakDuration));
             
             _blockBreakSequence
                 .OnComplete(() => _onDisappear.OnNext(this));

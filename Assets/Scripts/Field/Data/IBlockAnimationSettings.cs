@@ -13,6 +13,6 @@ namespace Field.Data
         float PunchDuration { get; }
         float PunchAmplitude { get; }
         float ColorDuration { get; }
-        
+        float BreakDuration { get; }
     }
 }

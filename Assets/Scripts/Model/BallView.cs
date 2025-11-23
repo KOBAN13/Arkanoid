@@ -1,5 +1,4 @@
-﻿using System;
-using R3;
+﻿using R3;
 using UnityEngine;
 
 namespace Model
@@ -9,11 +8,13 @@ namespace Model
     {
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _startPoint;
-
-        public Vector3 Position => transform.position;
+        [SerializeField] private Camera _camera;
+        [SerializeField] private LineRenderer _line;
+        
+        public Camera Camera => _camera;
+        public LineRenderer Line => _line;
         public Vector3 Velocity => _rigidbody.linearVelocity;
         public Transform StartPoint => _startPoint;
-        public Rigidbody Rigidbody => _rigidbody;
         public Observable<Collision> OnBallCollision => _onBallCollision;
         
         private readonly Subject<Collision> _onBallCollision = new();

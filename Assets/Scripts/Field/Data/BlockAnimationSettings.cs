@@ -12,5 +12,6 @@ namespace Field.Data
         [field: SerializeField] public float PunchDuration { get; private set; }
         [field: SerializeField] public float PunchAmplitude { get; private set; }
         [field: SerializeField] public float ColorDuration { get; private set; }
+        [field: SerializeField] public float BreakDuration { get; private set; }
     }
 }

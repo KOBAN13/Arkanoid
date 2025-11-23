@@ -95,7 +95,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2207022539675443440}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7974e8724622859429f0c7b7d1239561, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -122,5 +122,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1088569175927234613}
-  _flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  _originalColor: {r: 1, g: 0, b: 0, a: 1}

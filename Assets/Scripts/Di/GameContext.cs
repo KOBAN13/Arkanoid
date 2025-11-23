@@ -4,6 +4,8 @@ using Field.Matrix;
 using Input;
 using Model;
 using Pool;
+using Systems;
+using Ui;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +13,8 @@ namespace Di
 {
     public class GameContext : MonoInstaller
     {
+        [SerializeField] private ArkanoidView _arkanoidView;
+        
         [SerializeField] private GameFieldSettings _gameFieldService;
         [SerializeField] private BallSettings _ballSettings;
         [SerializeField] private BlockAnimationSettings _blockAnimationSettings;
@@ -27,6 +31,14 @@ namespace Di
             BindInput();
             BindBall();
             BindPlatform();
+            BindUi();
+        }
+
+        private void BindUi()
+        {
+            Container.BindInterfacesAndSelfTo<ArkanoidView>().FromInstance(_arkanoidView).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ArkanoidPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ArkanoidModule>().AsSingle().NonLazy();
         }
 
         private void BindPlatform()

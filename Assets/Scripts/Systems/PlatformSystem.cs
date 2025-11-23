@@ -4,7 +4,7 @@ using R3;
 using UnityEngine;
 using Zenject;
 
-namespace System
+namespace Systems
 {
     public class PlatformSystem : IInitializable, ITickable
     {
@@ -32,7 +32,19 @@ namespace System
 
         public void Tick()
         {
-            _platformView.transform.Translate(_delta * _moveSpeed * Time.deltaTime);
+            var move = _delta * _moveSpeed * Time.deltaTime;
+            var origin = _platformView.transform.position;
+            
+            if (Mathf.Approximately(move.x, 0f))
+                return;
+
+            var directionX = Mathf.Sign(move.x) * _platformView.ColliderSizeX / 2f;
+            var direction = new Vector3(directionX, 0, 0);
+            
+            if (!Physics.Raycast(origin, direction,Mathf.Abs(directionX)))
+            {
+                _platformView.transform.Translate(move, Space.World);
+            }
         }
     }
 }
