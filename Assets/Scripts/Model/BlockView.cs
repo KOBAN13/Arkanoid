@@ -7,7 +7,7 @@ using R3;
 
 namespace Model
 {
-    public class BlockView : MonoBehaviour, IInitializable
+    public class BlockView : MonoBehaviour
     {
         [SerializeField] private Renderer _renderer;
         private readonly Subject<BlockView> _onDisappear = new();
@@ -15,20 +15,18 @@ namespace Model
         private Sequence _blockSequence;
         private Sequence _blockBreakSequence;
         private IBlockAnimationSettings _blockAnimationSettings;
+        private IBlockHealthSettings _blockHealthSettings;
         private IHealthStats _healthStats;
         
         public Observable<BlockView> OnDisappear => _onDisappear;
         
         [Inject]
-        public void Construct(IBlockAnimationSettings blockAnimationSettings, IHealthStats healthStats)
+        public void Construct(IBlockAnimationSettings blockAnimationSettings, IBlockHealthSettings healthStats)
         {
             _blockAnimationSettings = blockAnimationSettings;
-            _healthStats = healthStats;
-        }
-        
-        public void Initialize()
-        {
-            _healthStats.OnHealthZero.Subscribe(BlockAnimationBreak).AddTo(this);
+            _blockHealthSettings = healthStats;
+            
+            Initialize();
         }
         
         public void OnCollisionEnter(Collision other)
@@ -40,6 +38,7 @@ namespace Model
 
         private void BlockAnimationHit()
         {
+            transform.DOKill();
             _blockSequence.Kill();
             _blockSequence = DOTween.Sequence();
             
@@ -59,19 +58,32 @@ namespace Model
                 .Append(_renderer.material
                     .DOColor(_blockAnimationSettings.OriginalColor, _blockAnimationSettings.ColorDuration));
         }
+        
+        private void Initialize()
+        {
+            _healthStats = new BlockHealth(_blockHealthSettings);
+            
+            _healthStats.OnHealthZero.Subscribe(BlockAnimationBreak).AddTo(this);
+        }
 
         private void BlockAnimationBreak(Unit unit)
         {
-            Debug.Log("BlockAnimationBreak");
-            
             var duration = 0.15f;
             
+            transform.DOKill();
             _blockBreakSequence.Kill();
             _blockBreakSequence = DOTween.Sequence();
 
-            _blockBreakSequence.Append(transform.DOScale(Vector3.zero, duration).SetEase(Ease.InBack));
-            _blockBreakSequence.Join(_renderer.material.DOFade(0f, duration));
-            _blockBreakSequence.OnComplete(() => _onDisappear.OnNext(this));
+            _blockBreakSequence
+                .Append(transform
+                .DOScale(Vector3.zero, duration)
+                .SetEase(Ease.InBack));
+            
+            _blockBreakSequence
+                .Join(_renderer.material.DOFade(0f, duration));
+            
+            _blockBreakSequence
+                .OnComplete(() => _onDisappear.OnNext(this));
         }
     }
 }

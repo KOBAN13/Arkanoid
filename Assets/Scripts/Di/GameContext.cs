@@ -4,7 +4,6 @@ using Field.Matrix;
 using Input;
 using Model;
 using Pool;
-using Stats;
 using UnityEngine;
 using Zenject;
 
@@ -28,12 +27,6 @@ namespace Di
             BindInput();
             BindBall();
             BindPlatform();
-            BindHealth();
-        }
-
-        private void BindHealth()
-        {
-            Container.BindInterfacesAndSelfTo<BlockHealth>().AsTransient().WithArguments(_blockHealthSettings).NonLazy();
         }
 
         private void BindPlatform()
@@ -59,6 +52,7 @@ namespace Di
             Container.BindInterfacesAndSelfTo<BallSettings>().FromScriptableObject(_ballSettings).AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();    
             Container.BindInterfacesAndSelfTo<BlockAnimationSettings>().FromScriptableObject(_blockAnimationSettings).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockHealthSettings>().FromScriptableObject(_blockHealthSettings).AsSingle().NonLazy();
         }
 
         private void BindField()

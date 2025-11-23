@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3fd7b57794ef6ad8b77383f692310, type: 3}
   m_Name: BlockHealthSettings
   m_EditorClassIdentifier: 
-  <MaxValue>k__BackingField: 0
+  <MaxValue>k__BackingField: 2
