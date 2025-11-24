@@ -3,7 +3,8 @@
     public interface IBallSettings
     {
         float StartSpeed { get; }
-        int DeviationAngle { get; }
-        float PerpendicularThreshold { get; }
+        float DeviationAngle { get; }
+        float HorizontalLockThreshold { get; }
+        float VerticalLockThreshold { get; }
     }
 }

@@ -73,25 +73,40 @@ namespace Systems
             var normal = contact.normal.normalized;
             
             var incomingVelocity = _lastVelocity;
-            
+
             if (incomingVelocity.sqrMagnitude < 0.05f)
                 incomingVelocity = -normal * _ballSettings.StartSpeed;
             
             var reflected = Vector3.Reflect(incomingVelocity, normal);
+            var direction = reflected.normalized;
+            var dot = Vector3.Dot(direction, normal);
+            var angle = _ballSettings.DeviationAngle;
             
-            if (Mathf.Abs(Vector3.Dot(reflected.normalized, normal)) < 0.1f)
+            if (Mathf.Abs(dot) < 0.1f)
             {
-                reflected = Quaternion.Euler(0, Random.Range(-10f, 10f), 0) * reflected;
+                reflected = Quaternion.Euler(0, Random.Range(-angle, angle), 0) * reflected;
+                direction = reflected.normalized;
             }
             
-            var newVelocity = reflected.normalized * _ballSettings.StartSpeed;
+            if (Mathf.Abs(direction.y) > _ballSettings.VerticalLockThreshold)
+            {
+                direction.y = Mathf.Sign(direction.y) * _ballSettings.VerticalLockThreshold;
+            }
             
+            if (Mathf.Abs(direction.y) < _ballSettings.HorizontalLockThreshold)
+            {
+                direction.y = Mathf.Sign(direction.y) * _ballSettings.HorizontalLockThreshold;
+            }
+
+            direction = direction.normalized;
+            
+            var newVelocity = direction * _ballSettings.StartSpeed;
+
             _ballView.SetVelocity(newVelocity);
-            
+
             _lastVelocity = newVelocity;
         }
-
-
+        
         private void ResetBall()
         {
             _ballView.transform.localPosition = _startPoint.localPosition;
