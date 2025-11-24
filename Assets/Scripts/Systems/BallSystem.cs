@@ -51,6 +51,9 @@ namespace Systems
         {
             if (_isLaunched)
                 return;
+            
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+                return;
 
             var line = _ballView.Line;
 
