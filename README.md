@@ -36,5 +36,5 @@
 - **Запуск мяча:** левый клик мыши или тап по экрану в нужную сторону; линия прицеливания обновляется до запуска. 【F:Assets/Scripts/Systems/BallSystem.cs】
 
 ## Известные нюансы
-- В момент победы/поражения `Time.timeScale` ставится в 0; кнопка «Restart» перезагружает текущую сцену через `ArkanoidModule`. 【F:Assets/Scripts/Ui/ArkanoidModule.cs†L18-L36】【F:Assets/Scripts/Systems/GameStateSystem.cs】
+- В момент победы/поражения `Time.timeScale` ставится в 0; кнопка «Restart» перезагружает текущую сцену через `ArkanoidModule`. 【F:Assets/Scripts/Ui/ArkanoidModule.cs】【F:Assets/Scripts/Systems/GameStateSystem.cs】
 - Для корректной работы DOTween убедитесь, что в проекте инициализирован DOTweenSetup (стандартный ассет библиотеки).
