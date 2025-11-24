@@ -14,6 +14,8 @@ namespace Input
         public Observable<Vector2> Move => _move;
 
         private readonly PlayerInput _playerInput;
+        private Vector2 _lastTouchPosition;
+        private bool _touchActive;
 
         public PlayerInputReader(PlayerInput playerInput)
         {
@@ -48,7 +50,26 @@ namespace Input
         public void Tick()
         {
             var direction = _playerInput.Move.MovePlatform.ReadValue<Vector2>();
-            
+
+            if (Touchscreen.current?.primaryTouch.press.isPressed == true)
+            {
+                var position = Touchscreen.current.primaryTouch.position.ReadValue();
+
+                if (_touchActive)
+                {
+                    var delta = position - _lastTouchPosition;
+                    var directionX = Mathf.Clamp(delta.x / 100f, -1f, 1f);
+                    direction = new Vector2(directionX, 0f);
+                }
+
+                _lastTouchPosition = position;
+                _touchActive = true;
+            }
+            else
+            {
+                _touchActive = false;
+            }
+
             _move.Value = direction;
         }
     }

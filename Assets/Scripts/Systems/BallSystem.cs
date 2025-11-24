@@ -3,6 +3,7 @@ using Input;
 using Model;
 using R3;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Systems
@@ -50,20 +51,22 @@ namespace Systems
         {
             if (_isLaunched)
                 return;
-            
+
             var line = _ballView.Line;
-            
+
             line.SetPosition(0, _ballView.BallTransform.position);
-            
+
+            var pointerPosition = GetPointerPosition();
+
             var mousePosition = _ballView.Camera.ScreenToWorldPoint(new Vector3(
-                UnityEngine.Input.mousePosition.x,
-                UnityEngine.Input.mousePosition.y,
+                pointerPosition.x,
+                pointerPosition.y,
                 10f
             ));
 
             line.SetPosition(1, mousePosition);
         }
-        
+
         private void HandleCollision(Collision collision)
         {
             if (collision.contactCount == 0 || !_isLaunched)
@@ -117,9 +120,24 @@ namespace Systems
             _ballView.Line.enabled = true;
         }
 
+        private Vector3 GetPointerPosition()
+        {
+            if (Touchscreen.current?.primaryTouch.press.isPressed == true)
+            {
+                return Touchscreen.current.primaryTouch.position.ReadValue();
+            }
+
+            if (Mouse.current != null)
+            {
+                return Mouse.current.position.ReadValue();
+            }
+
+            return UnityEngine.Input.mousePosition;
+        }
+
         private void LaunchToPoint(Vector2 screenPoint)
         {
-            if (_isLaunched) 
+            if (_isLaunched)
                 return;
             
             _isLaunched = true;
