@@ -17,6 +17,11 @@ namespace Field
         private IGenericObjectPool<BlockView> _blockPool;
         private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<Vector2Int, BlockView> _blocks = new();
+        private readonly Subject<Unit> _onAllBlocksDestroyed = new();
+
+        private int _aliveBlocks;
+
+        public Observable<Unit> OnAllBlocksDestroyed => _onAllBlocksDestroyed;
 
         [Inject]
         public void Inject(
@@ -46,7 +51,7 @@ namespace Field
             }
         }
 
-        public void CreateBlock(Vector2Int position)
+        private void CreateBlock(Vector2Int position)
         {
             _matrixService.CreateBlock(position);
 
@@ -68,9 +73,12 @@ namespace Field
             blockView.transform.localPosition = new Vector3(blockPositionX, blockPositionY, 0f);
 
             _blocks[position] = blockView;
+
+            _aliveBlocks++;
         }
         
-        public void DeleteBlock(Vector2Int position)
+
+        private void DeleteBlock(Vector2Int position)
         {
             _matrixService.DeleteBlock(position);
 
@@ -78,6 +86,19 @@ namespace Field
             {
                 _blockPool.ReturnObject(blockView);
             }
+
+            _aliveBlocks = Mathf.Max(0, _aliveBlocks - 1);
+
+            if (_aliveBlocks == 0)
+            {
+                _onAllBlocksDestroyed.OnNext(Unit.Default);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _disposables.Dispose();
+            _onAllBlocksDestroyed.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Input;
+﻿using Field.Data;
+using Input;
 using Model;
 using R3;
 using UnityEngine;
@@ -10,14 +11,15 @@ namespace Systems
     {
         private readonly IInputReader _inputReader;
         private readonly PlatformView _platformView;
-
-        private float _moveSpeed = 5f;
+        private readonly IPlatformSettings _platformSettings;
+        
         private Vector3 _delta;
 
-        public PlatformSystem(IInputReader inputReader, PlatformView platformView)
+        public PlatformSystem(IInputReader inputReader, PlatformView platformView, IPlatformSettings platformSettings)
         {
             _inputReader = inputReader;
             _platformView = platformView;
+            _platformSettings = platformSettings;
         }
         
         public void Initialize()
@@ -32,7 +34,7 @@ namespace Systems
 
         public void Tick()
         {
-            var move = _delta * _moveSpeed * Time.deltaTime;
+            var move = _delta * _platformSettings.MoveSpeed * Time.deltaTime;
             var origin = _platformView.transform.position;
             
             if (Mathf.Approximately(move.x, 0f))

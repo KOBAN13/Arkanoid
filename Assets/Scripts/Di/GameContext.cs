@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Field;
 using Field.Data;
 using Field.Matrix;
 using Input;
@@ -15,13 +15,16 @@ namespace Di
     {
         [SerializeField] private ArkanoidView _arkanoidView;
         
-        [SerializeField] private GameFieldSettings _gameFieldService;
+        [SerializeField] private GameFieldSettings _gameFieldSettings;
         [SerializeField] private BallSettings _ballSettings;
         [SerializeField] private BlockAnimationSettings _blockAnimationSettings;
         [SerializeField] private BlockHealthSettings _blockHealthSettings;
+        [SerializeField] private PlatformSettings _platformSettings;
         
         [SerializeField] private BallView _ballView;
         [SerializeField] private PlatformView _platformView;
+        [SerializeField] private GameFieldService _gameFieldService;
+        [SerializeField] private GameStateView _gameStateView;
         
         public override void InstallBindings()
         {
@@ -32,6 +35,13 @@ namespace Di
             BindBall();
             BindPlatform();
             BindUi();
+            BindGameState();
+        }
+
+        private void BindGameState()
+        {
+            Container.BindInterfacesAndSelfTo<GameStateView>().FromInstance(_gameStateView).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameStateSystem>().AsSingle().NonLazy();
         }
 
         private void BindUi()
@@ -62,13 +72,15 @@ namespace Di
         private void BindData()
         {
             Container.BindInterfacesAndSelfTo<BallSettings>().FromScriptableObject(_ballSettings).AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldService).AsSingle().NonLazy();    
+            Container.BindInterfacesAndSelfTo<GameFieldSettings>().FromScriptableObject(_gameFieldSettings).AsSingle().NonLazy();    
             Container.BindInterfacesAndSelfTo<BlockAnimationSettings>().FromScriptableObject(_blockAnimationSettings).AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockHealthSettings>().FromScriptableObject(_blockHealthSettings).AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlatformSettings>().FromScriptableObject(_platformSettings).AsSingle().NonLazy();
         }
 
         private void BindField()
         {
+            Container.BindInterfacesAndSelfTo<GameFieldService>().FromInstance(_gameFieldService).AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<MatrixService>().AsSingle().NonLazy();
         }
 

@@ -36,5 +36,11 @@ namespace Ui
         
         public void UpdateCanvasGroupAlpha(float alpha)
             => _canvasGroup.alpha = alpha;
+        
+        public void UpdateCanvasGroupInteractable(bool isVisible)
+        {
+            _canvasGroup.interactable = isVisible;
+            _canvasGroup.blocksRaycasts = isVisible;
+        }
     }
 }

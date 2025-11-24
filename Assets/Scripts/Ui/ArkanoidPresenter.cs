@@ -28,6 +28,10 @@ namespace Ui
             _arkanoidModule.CanvasGroupAlpha
                 .Subscribe(_arkanoidView.UpdateCanvasGroupAlpha)
                 .AddTo(_disposables);
+
+            _arkanoidModule.ResultVisible
+                .Subscribe(_arkanoidView.UpdateCanvasGroupInteractable)
+                .AddTo(_disposables);
         }
 
         public void Dispose()
