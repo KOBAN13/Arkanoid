@@ -1,4 +1,5 @@
 ﻿using R3;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Ui
@@ -27,7 +28,10 @@ namespace Ui
         }
 
         public void Restart()
-            => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
         private void ShowResult(string description)
         {

@@ -83,5 +83,12 @@ namespace Model
             _blockBreakSequence
                 .OnComplete(() => _onDisappear.OnNext(this));
         }
+        
+        private void OnDisable()
+        {
+            _blockSequence?.Kill();
+            _blockBreakSequence?.Kill();
+            transform.DOKill();
+        }
     }
 }

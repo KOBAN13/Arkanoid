@@ -12,19 +12,24 @@ namespace Input
         private readonly Subject<Vector2> _onMouseLeftClick = new();
         public Observable<Vector2> OnMouseLeftClick => _onMouseLeftClick;
         public Observable<Vector2> Move => _move;
-        
+
         private readonly PlayerInput _playerInput;
 
         public PlayerInputReader(PlayerInput playerInput)
         {
             _playerInput = playerInput;
         }
+        
+        ~PlayerInputReader()
+        {
+            _playerInput?.Dispose();
+        }
 
         public void Dispose()
         {
             _playerInput.Move.MouseLeftClick.performed -= MouseLeftClick;
             
-            _playerInput?.Dispose();
+            _playerInput.Dispose();
         }
 
         public void Initialize()

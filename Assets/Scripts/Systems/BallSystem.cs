@@ -70,40 +70,27 @@ namespace Systems
                 return;
 
             var contact = collision.GetContact(0);
-            var normal = contact.normal;
+            var normal = contact.normal.normalized;
             
-            var incomingVelocity = _lastVelocity.sqrMagnitude > 0.01f
-                ? _lastVelocity
-                : _ballView.Velocity.sqrMagnitude > 0.01f
-                    ? _ballView.Velocity
-                    : -normal;
-
-            var direction = incomingVelocity.normalized;
+            var incomingVelocity = _lastVelocity;
             
-            var dot = Mathf.Abs(Vector3.Dot(direction, normal));
-            var isPerpendicular = dot < _ballSettings.PerpendicularThreshold;
-
-            if (isPerpendicular)
-                _perpendicularReflectionCount++;
-            else
-                _perpendicularReflectionCount = 0;
+            if (incomingVelocity.sqrMagnitude < 0.05f)
+                incomingVelocity = -normal * _ballSettings.StartSpeed;
             
-            var reflected = Vector3.Reflect(direction, normal);
+            var reflected = Vector3.Reflect(incomingVelocity, normal);
             
-            if (_perpendicularReflectionCount >= 2)
+            if (Mathf.Abs(Vector3.Dot(reflected.normalized, normal)) < 0.1f)
             {
-                var deviation = Random.Range(-_ballSettings.DeviationAngle, _ballSettings.DeviationAngle);
-                var rot = Quaternion.AngleAxis(deviation, Vector3.up);
-                reflected = rot * reflected;
-                _perpendicularReflectionCount = 0;
+                reflected = Quaternion.Euler(0, Random.Range(-10f, 10f), 0) * reflected;
             }
             
             var newVelocity = reflected.normalized * _ballSettings.StartSpeed;
             
             _ballView.SetVelocity(newVelocity);
-
+            
             _lastVelocity = newVelocity;
         }
+
 
         private void ResetBall()
         {

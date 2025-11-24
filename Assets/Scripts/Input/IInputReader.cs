@@ -7,5 +7,7 @@ namespace Input
     {
         Observable<Vector2> OnMouseLeftClick { get; }
         Observable<Vector2> Move { get; }
+
+        void Dispose();
     }
 }

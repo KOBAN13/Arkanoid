@@ -36,7 +36,6 @@ namespace Field.Matrix
             Length = length;
             _array = array;
         }
-        
 
         public Enumerator GetEnumerator()
         {
