@@ -18,7 +18,6 @@ namespace Systems
         private Transform _startPoint;
         
         private Vector3 _lastVelocity;
-        private int _perpendicularReflectionCount;
 
         public BallSystem(BallView ballView, IBallSettings ballSettings, IInputReader inputReader)
         {
@@ -119,7 +118,6 @@ namespace Systems
             _isLaunched = false;
 
             _lastVelocity = Vector3.zero;
-            _perpendicularReflectionCount = 0;
             _ballView.Line.enabled = true;
         }
 
